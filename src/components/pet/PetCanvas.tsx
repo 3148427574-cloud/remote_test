@@ -1,0 +1,36 @@
+import { usePetStore } from "../../stores/usePetStore";
+import aeriImg from "../../assets/images/puppy.png";
+
+export default function PetCanvas() {
+  const currentTransform = usePetStore((s) => s.currentTransform);
+  const currentAnimation = usePetStore((s) => s.currentAnimation);
+
+  return (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <img
+        src={aeriImg}
+        draggable={false}
+        onDragStart={(e) => e.preventDefault()}
+        style={{
+          width: 70,
+          height: 70,
+          objectFit: "contain",
+          transform: currentTransform,
+          transition: currentAnimation === "idle"
+            ? "transform 0.3s ease"
+            : "transform 0.08s ease",
+          imageRendering: "pixelated",
+        }}
+        alt="Aeri"
+      />
+    </div>
+  );
+}
