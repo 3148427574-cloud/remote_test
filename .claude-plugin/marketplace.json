@@ -1,0 +1,25 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "frosts-marketplace",
+  "description": "Frost's personal Claude Code plugins marketplace",
+  "owner": {
+    "name": "frost"
+  },
+  "plugins": [
+    {
+      "name": "frontend-design",
+      "description": "Create distinctive, production-grade frontend interfaces with high design quality. Use when building web components, pages, dashboards, React/Vue/Svelte apps, or any frontend UI.",
+      "author": {
+        "name": "Anthropic"
+      },
+      "category": "frontend",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/3148427574-cloud/remote_test.git",
+        "path": "frontend-design",
+        "ref": "main"
+      },
+      "homepage": "https://github.com/3148427574-cloud/remote_test/tree/main/frontend-design"
+    }
+  ]
+}
