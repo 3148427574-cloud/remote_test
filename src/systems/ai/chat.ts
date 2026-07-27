@@ -1,6 +1,6 @@
 import { invoke } from "@tauri-apps/api/core";
 import { useSettingsStore } from "../../stores/useSettingsStore";
-import type { ReplyStyle } from "../../stores/useSettingsStore";
+import type { ReplyStyle, Language } from "../../stores/useSettingsStore";
 
 export interface ChatConfig {
   baseUrl: string;
@@ -13,16 +13,23 @@ export interface ChatMessage {
   content: string;
 }
 
-const BASE_SYSTEM_PROMPT = "You are a cute desktop pet puppy named Aeri. Reply in 1-3 short sentences.";
+const LANG_INSTRUCTION: Record<Language, string> = {
+  zh: "Always reply in Chinese.",
+  en: "Always reply in English.",
+  ja: "Always reply in Japanese.",
+};
 
 const STYLE_SUFFIX: Record<ReplyStyle, string> = {
-  cute: " Always respond in a cute, playful tone. Use emojis and kaomoji like (｡･ω･｡). End sentences with 'Woof~' occasionally. Use Chinese.",
-  concise: " Respond briefly and directly. No extra fluff. Use Chinese.",
-  formal: " Respond in a polite, professional manner. Use complete sentences. Use Chinese.",
+  cute: " Always respond in a cute, playful tone. Use emojis and kaomoji like (｡･ω･｡). End sentences with 'Woof~' occasionally.",
+  concise: " Respond briefly and directly. No extra fluff.",
+  formal: " Respond in a polite, professional manner. Use complete sentences.",
 };
 
 async function buildSystemPrompt(city?: string): Promise<string> {
-  const replyStyle = useSettingsStore.getState().replyStyle;
+  const settings = useSettingsStore.getState();
+  const langInstr = LANG_INSTRUCTION[settings.language];
+  const styleInstr = STYLE_SUFFIX[settings.replyStyle];
+
   let contextText = "";
   try {
     contextText = await invoke<string>("get_context_text", { city: city || null });
@@ -30,7 +37,7 @@ async function buildSystemPrompt(city?: string): Promise<string> {
     // 上下文获取失败时静默降级，不影响对话
   }
 
-  const prompt = BASE_SYSTEM_PROMPT + STYLE_SUFFIX[replyStyle];
+  const prompt = `You are a cute desktop pet puppy named Aeri. Reply in 1-3 short sentences. ${langInstr}${styleInstr}`;
 
   if (contextText) {
     return `${prompt}\n\nCurrent context:\n${contextText}\n\nUse the context naturally in your response (greet by time of day, care about weather, etc).`;

@@ -1,16 +1,17 @@
 import { useSettingsStore } from "../../../stores/useSettingsStore";
 import type { InteractionFrequency, ReplyStyle } from "../../../stores/useSettingsStore";
+import { useLocale } from "../../../systems/i18n/locale";
 
-const FREQ_OPTIONS: { value: InteractionFrequency; label: string }[] = [
-  { value: "active", label: "Active" },
-  { value: "normal", label: "Normal" },
-  { value: "quiet", label: "Quiet" },
+const FREQ_OPTIONS: { value: InteractionFrequency; labelKey: "active" | "normal" | "quiet" }[] = [
+  { value: "active", labelKey: "active" },
+  { value: "normal", labelKey: "normal" },
+  { value: "quiet", labelKey: "quiet" },
 ];
 
-const STYLE_OPTIONS: { value: ReplyStyle; label: string }[] = [
-  { value: "cute", label: "Cute" },
-  { value: "concise", label: "Concise" },
-  { value: "formal", label: "Formal" },
+const STYLE_OPTIONS: { value: ReplyStyle; labelKey: "cute" | "concise" | "formal" }[] = [
+  { value: "cute", labelKey: "cute" },
+  { value: "concise", labelKey: "concise" },
+  { value: "formal", labelKey: "formal" },
 ];
 
 export default function BehaviorSettings() {
@@ -20,13 +21,14 @@ export default function BehaviorSettings() {
   const setReplyStyle = useSettingsStore((s) => s.setReplyStyle);
   const chatMemory = useSettingsStore((s) => s.chatMemory);
   const setChatMemory = useSettingsStore((s) => s.setChatMemory);
+  const t = useLocale();
 
   return (
     <div className="settings-section">
-      <div className="settings-section-title">AI Behavior</div>
+      <div className="settings-section-title">{t("ai_behavior")}</div>
 
       <div className="settings-field">
-        <span>Reply Style</span>
+        <span>{t("reply_style")}</span>
         <div className="segmented-row">
           {STYLE_OPTIONS.map((o) => (
             <button
@@ -34,14 +36,14 @@ export default function BehaviorSettings() {
               className={`segmented-btn${replyStyle === o.value ? " active" : ""}`}
               onClick={() => setReplyStyle(o.value)}
             >
-              {o.label}
+              {t(o.labelKey)}
             </button>
           ))}
         </div>
       </div>
 
       <div className="settings-field">
-        <span>Interaction Frequency</span>
+        <span>{t("interaction")}</span>
         <div className="segmented-row">
           {FREQ_OPTIONS.map((o) => (
             <button
@@ -49,14 +51,14 @@ export default function BehaviorSettings() {
               className={`segmented-btn${interactionFrequency === o.value ? " active" : ""}`}
               onClick={() => setInteractionFrequency(o.value)}
             >
-              {o.label}
+              {t(o.labelKey)}
             </button>
           ))}
         </div>
       </div>
 
       <div className="settings-field settings-field-row">
-        <span>Chat Memory</span>
+        <span>{t("chat_memory")}</span>
         <label className="toggle-switch">
           <input
             type="checkbox"

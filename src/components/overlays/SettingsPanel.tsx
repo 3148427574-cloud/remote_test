@@ -1,6 +1,7 @@
 import { useSettingsStore } from "../../stores/useSettingsStore";
 import ApiSettings from "./settings/ApiSettings";
 import PetSettings from "./settings/PetSettings";
+import LanguageSettings from "./settings/LanguageSettings";
 import BehaviorSettings from "./settings/BehaviorSettings";
 import AppSettings from "./settings/AppSettings";
 import AboutSection from "./settings/AboutSection";
@@ -35,6 +36,7 @@ export default function SettingsPanel() {
         <div className="settings-overlay" onClick={toggleSettings}>
           <div className="settings-panel" onClick={(e) => e.stopPropagation()}>
             <PetSettings />
+            <LanguageSettings />
             <BehaviorSettings />
             <ApiSettings />
             <AppSettings />

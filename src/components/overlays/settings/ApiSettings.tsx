@@ -1,17 +1,19 @@
 import { useSettingsStore } from "../../../stores/useSettingsStore";
+import { useLocale } from "../../../systems/i18n/locale";
 
 export default function ApiSettings() {
   const config = useSettingsStore((s) => s.config);
   const setConfig = useSettingsStore((s) => s.setConfig);
   const city = useSettingsStore((s) => s.city);
   const setCity = useSettingsStore((s) => s.setCity);
+  const t = useLocale();
 
   return (
     <div className="settings-section">
-      <div className="settings-section-title">API</div>
+      <div className="settings-section-title">{t("api")}</div>
 
       <label className="settings-field">
-        <span>API URL</span>
+        <span>{t("api_url")}</span>
         <input
           value={config.baseUrl}
           onChange={(e) => setConfig({ baseUrl: e.target.value })}
@@ -20,7 +22,7 @@ export default function ApiSettings() {
       </label>
 
       <label className="settings-field">
-        <span>API Key</span>
+        <span>{t("api_key")}</span>
         <input
           type="password"
           value={config.apiKey}
@@ -30,7 +32,7 @@ export default function ApiSettings() {
       </label>
 
       <label className="settings-field">
-        <span>Model</span>
+        <span>{t("model")}</span>
         <input
           value={config.model}
           onChange={(e) => setConfig({ model: e.target.value })}
@@ -39,7 +41,7 @@ export default function ApiSettings() {
       </label>
 
       <label className="settings-field">
-        <span>City</span>
+        <span>{t("city")}</span>
         <input
           value={city}
           onChange={(e) => setCity(e.target.value)}

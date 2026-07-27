@@ -8,16 +8,18 @@ import {
   enableAutoLaunch,
   disableAutoLaunch,
 } from "../../../tauri/commands";
+import { useLocale } from "../../../systems/i18n/locale";
 
-const SCALE_OPTIONS: { value: WindowScale; label: string }[] = [
+type ScaleLabel = "0.8x" | "1x" | "1.2x";
+const SCALE_OPTIONS: { value: WindowScale; label: ScaleLabel }[] = [
   { value: 0.8, label: "0.8x" },
   { value: 1.0, label: "1x" },
   { value: 1.2, label: "1.2x" },
 ];
 
-const STARTUP_OPTIONS: { value: StartupBehavior; label: string }[] = [
-  { value: "show", label: "Show" },
-  { value: "tray", label: "Tray" },
+const STARTUP_OPTIONS: { value: StartupBehavior; labelKey: "show" | "tray" }[] = [
+  { value: "show", labelKey: "show" },
+  { value: "tray", labelKey: "tray" },
 ];
 
 export default function AppSettings() {
@@ -31,8 +33,8 @@ export default function AppSettings() {
   const setWindowScaleState = useSettingsStore((s) => s.setWindowScale);
   const chatHotkey = useSettingsStore((s) => s.chatHotkey);
   const setChatHotkey = useSettingsStore((s) => s.setChatHotkey);
+  const t = useLocale();
 
-  // Sync autolaunch state from system on mount
   useEffect(() => {
     isAutoLaunchEnabled().then(setAutoLaunch).catch(() => {});
   }, []);
@@ -58,10 +60,10 @@ export default function AppSettings() {
 
   return (
     <div className="settings-section">
-      <div className="settings-section-title">Application</div>
+      <div className="settings-section-title">{t("application")}</div>
 
       <div className="settings-field settings-field-row">
-        <span>Launch at Startup</span>
+        <span>{t("auto_launch")}</span>
         <label className="toggle-switch">
           <input
             type="checkbox"
@@ -73,7 +75,7 @@ export default function AppSettings() {
       </div>
 
       <div className="settings-field">
-        <span>Startup Mode</span>
+        <span>{t("startup_mode")}</span>
         <div className="segmented-row">
           {STARTUP_OPTIONS.map((o) => (
             <button
@@ -81,14 +83,14 @@ export default function AppSettings() {
               className={`segmented-btn${startupBehavior === o.value ? " active" : ""}`}
               onClick={() => setStartupBehavior(o.value)}
             >
-              {o.label}
+              {t(o.labelKey)}
             </button>
           ))}
         </div>
       </div>
 
       <div className="settings-field settings-field-row">
-        <span>Always on Top</span>
+        <span>{t("always_on_top")}</span>
         <label className="toggle-switch">
           <input
             type="checkbox"
@@ -100,7 +102,7 @@ export default function AppSettings() {
       </div>
 
       <div className="settings-field">
-        <span>Window Scale</span>
+        <span>{t("window_scale")}</span>
         <div className="segmented-row">
           {SCALE_OPTIONS.map((o) => (
             <button
@@ -115,7 +117,7 @@ export default function AppSettings() {
       </div>
 
       <label className="settings-field">
-        <span>Chat Hotkey</span>
+        <span>{t("chat_hotkey")}</span>
         <input
           value={chatHotkey}
           onChange={(e) => setChatHotkey(e.target.value)}

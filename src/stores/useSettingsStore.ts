@@ -7,6 +7,7 @@ export type StartupBehavior = "show" | "tray";
 export type WindowScale = 0.8 | 1.0 | 1.2;
 export type InteractionFrequency = "active" | "normal" | "quiet";
 export type ReplyStyle = "cute" | "concise" | "formal";
+export type Language = "zh" | "en" | "ja";
 
 interface SettingsState {
   config: ChatConfig;
@@ -22,6 +23,7 @@ interface SettingsState {
   windowScale: WindowScale;
   chatHotkey: string;
 
+  language: Language;
   interactionFrequency: InteractionFrequency;
   replyStyle: ReplyStyle;
   chatMemory: boolean;
@@ -43,6 +45,7 @@ interface SettingsActions {
   setWindowScale: (scale: WindowScale) => void;
   setChatHotkey: (hk: string) => void;
 
+  setLanguage: (l: Language) => void;
   setInteractionFrequency: (f: InteractionFrequency) => void;
   setReplyStyle: (s: ReplyStyle) => void;
   setChatMemory: (on: boolean) => void;
@@ -70,6 +73,7 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()(
       windowScale: 1.0,
       chatHotkey: "Ctrl+Space",
 
+      language: "zh",
       interactionFrequency: "normal",
       replyStyle: "cute",
       chatMemory: true,
@@ -92,6 +96,7 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()(
       setWindowScale: (windowScale) => set({ windowScale }),
       setChatHotkey: (chatHotkey) => set({ chatHotkey }),
 
+      setLanguage: (language) => set({ language }),
       setInteractionFrequency: (interactionFrequency) => set({ interactionFrequency }),
       setReplyStyle: (replyStyle) => set({ replyStyle }),
       setChatMemory: (chatMemory) => set({ chatMemory }),

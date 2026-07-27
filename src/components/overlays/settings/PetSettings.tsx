@@ -1,11 +1,13 @@
 import { useSettingsStore } from "../../../stores/useSettingsStore";
 import { pickImageFile, readImageBase64 } from "../../../tauri/commands";
+import { useLocale } from "../../../systems/i18n/locale";
 
 export default function PetSettings() {
   const petName = useSettingsStore((s) => s.petName);
   const setPetName = useSettingsStore((s) => s.setPetName);
   const petAvatar = useSettingsStore((s) => s.petAvatar);
   const setPetAvatar = useSettingsStore((s) => s.setPetAvatar);
+  const t = useLocale();
 
   const handlePreset = (type: "puppy" | "cat") => {
     setPetAvatar({ type });
@@ -20,10 +22,10 @@ export default function PetSettings() {
 
   return (
     <div className="settings-section">
-      <div className="settings-section-title">Pet</div>
+      <div className="settings-section-title">{t("pet")}</div>
 
       <label className="settings-field">
-        <span>Name</span>
+        <span>{t("name")}</span>
         <input
           value={petName}
           onChange={(e) => setPetName(e.target.value)}
@@ -32,25 +34,25 @@ export default function PetSettings() {
       </label>
 
       <div className="settings-field">
-        <span>Avatar</span>
+        <span>{t("avatar")}</span>
         <div className="pet-avatar-selector">
           <button
             className={`pet-avatar-btn${petAvatar.type === "puppy" ? " active" : ""}`}
             onClick={() => handlePreset("puppy")}
           >
-            Dog
+            {t("dog")}
           </button>
           <button
             className={`pet-avatar-btn${petAvatar.type === "cat" ? " active" : ""}`}
             onClick={() => handlePreset("cat")}
           >
-            Cat
+            {t("cat")}
           </button>
           <button
             className={`pet-avatar-btn${petAvatar.type === "custom" ? " active" : ""}`}
             onClick={handleCustom}
           >
-            Custom
+            {t("custom")}
           </button>
         </div>
       </div>
