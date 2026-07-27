@@ -1,4 +1,6 @@
 import { invoke } from "@tauri-apps/api/core";
+import { useSettingsStore } from "../../stores/useSettingsStore";
+import type { ReplyStyle } from "../../stores/useSettingsStore";
 
 export interface ChatConfig {
   baseUrl: string;
@@ -11,17 +13,16 @@ export interface ChatMessage {
   content: string;
 }
 
-const BASE_SYSTEM_PROMPT = `你是一只可爱的桌面宠物小狗，名字叫 Aeri。
-你的特点：
-- 活泼、温暖、偶尔犯傻
-- 回复简短（1~3 句话）
-- 喜欢用"汪"结尾
-- 会用颜文字 (｡･ω･｡)
-- 对主人很亲切
+const BASE_SYSTEM_PROMPT = "You are a cute desktop pet puppy named Aeri. Reply in 1-3 short sentences.";
 
-请以 Aeri 的身份回复。`;
+const STYLE_SUFFIX: Record<ReplyStyle, string> = {
+  cute: " Always respond in a cute, playful tone. Use emojis and kaomoji like (｡･ω･｡). End sentences with 'Woof~' occasionally. Use Chinese.",
+  concise: " Respond briefly and directly. No extra fluff. Use Chinese.",
+  formal: " Respond in a polite, professional manner. Use complete sentences. Use Chinese.",
+};
 
 async function buildSystemPrompt(city?: string): Promise<string> {
+  const replyStyle = useSettingsStore.getState().replyStyle;
   let contextText = "";
   try {
     contextText = await invoke<string>("get_context_text", { city: city || null });
@@ -29,11 +30,13 @@ async function buildSystemPrompt(city?: string): Promise<string> {
     // 上下文获取失败时静默降级，不影响对话
   }
 
+  const prompt = BASE_SYSTEM_PROMPT + STYLE_SUFFIX[replyStyle];
+
   if (contextText) {
-    return `${BASE_SYSTEM_PROMPT}\n\n当前环境信息：\n${contextText}\n\n请根据环境信息自然地回复，比如根据时段打招呼、根据天气关心主人。`;
+    return `${prompt}\n\nCurrent context:\n${contextText}\n\nUse the context naturally in your response (greet by time of day, care about weather, etc).`;
   }
 
-  return BASE_SYSTEM_PROMPT;
+  return prompt;
 }
 
 export async function* streamChat(

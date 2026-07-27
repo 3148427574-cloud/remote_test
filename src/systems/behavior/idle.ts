@@ -1,15 +1,13 @@
-/**
- * MVP 自主行为系统
- * 简单的定时随机触发，不引入复杂状态机。
- */
+import { useSettingsStore } from "../../stores/useSettingsStore";
+import type { InteractionFrequency } from "../../stores/useSettingsStore";
 
 interface EmotionState {
-  joy: number; // 0 ~ 1
+  joy: number;
 }
 
 interface IdleActionResult {
   animation: string;
-  duration: number; // ms，动画播放完后保持多久再触发下一个
+  duration: number;
 }
 
 const IDLE_ACTIONS: IdleActionResult[] = [
@@ -19,16 +17,20 @@ const IDLE_ACTIONS: IdleActionResult[] = [
   { animation: "walk", duration: 4000 },
 ];
 
-/**
- * 每次 tick 时调用，根据上次行为间隔决定是否触发新行为。
- * 返回要播放的动画名，或 null 表示什么都不做。
- */
+const FREQ_RANGE: Record<InteractionFrequency, [number, number]> = {
+  active: [3000, 6000],
+  normal: [5000, 10000],
+  quiet: [10000, 20000],
+};
+
 export function tickBehavior(
   timeSinceLastAction: number,
   _emotion: EmotionState,
 ): string | null {
-  // 每 5~10 秒随机一个行为
-  const interval = 5000 + Math.random() * 5000;
+  const freq = useSettingsStore.getState().interactionFrequency;
+  const [lo, hi] = FREQ_RANGE[freq];
+  const interval = lo + Math.random() * (hi - lo);
+
   if (timeSinceLastAction < interval) return null;
 
   const action = IDLE_ACTIONS[Math.floor(Math.random() * IDLE_ACTIONS.length)];

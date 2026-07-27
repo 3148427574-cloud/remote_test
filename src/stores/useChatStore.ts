@@ -22,23 +22,26 @@ export const useChatStore = create<ChatState & ChatActions>((set, get) => ({
   showInput: false,
 
   sendMessage: async (text: string) => {
-    const { config, city } = useSettingsStore.getState();
+    const { config, city, chatMemory } = useSettingsStore.getState();
     const { messages } = get();
+    const history = chatMemory ? messages : [];
     set({ isStreaming: true, currentReply: "", showInput: false });
 
     const userMsg: ChatMessage = { role: "user", content: text };
-    const newMessages = [...messages, userMsg];
-    set({ messages: newMessages });
+    const newMessages = [...history, userMsg];
+    if (chatMemory) set({ messages: newMessages });
 
     try {
       let reply = "";
-      for await (const chunk of streamChat(config, messages, text, city || undefined)) {
+      for await (const chunk of streamChat(config, history, text, city || undefined)) {
         reply += chunk;
         set({ currentReply: reply });
       }
-      set({
-        messages: [...newMessages, { role: "assistant", content: reply }],
-      });
+      if (chatMemory) {
+        set({
+          messages: [...newMessages, { role: "assistant", content: reply }],
+        });
+      }
     } catch (err) {
       set({ currentReply: `(出错了: ${String(err)})` });
     } finally {

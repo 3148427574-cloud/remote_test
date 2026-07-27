@@ -176,6 +176,116 @@ body,
   border-color: #ff9f43;
 }
 
+/* ─── settings row (label + toggle) ─── */
+
+.settings-field-row {
+  flex-direction: row !important;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ─── segmented button group ─── */
+
+.segmented-row {
+  display: flex;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.segmented-btn {
+  flex: 1;
+  padding: 4px 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.6);
+  font-size: 11px;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.segmented-btn:hover {
+  border-color: #ff9f43;
+  color: #ff9f43;
+}
+
+.segmented-btn.active {
+  background: #ff9f43;
+  border-color: #ff9f43;
+  color: #fff;
+}
+
+/* ─── toggle switch ─── */
+
+.toggle-switch {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  inset: 0;
+  background: #ddd;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.toggle-slider::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background: #ff9f43;
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+  transform: translateX(16px);
+}
+
+/* ─── about section ─── */
+
+.about-info {
+  text-align: center;
+  padding: 4px 0;
+}
+
+.about-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.about-version {
+  font-size: 11px;
+  color: #999;
+  margin-top: 2px;
+}
+
+.about-desc {
+  font-size: 10px;
+  color: #bbb;
+  margin-top: 2px;
+}
+
+/* ─── chat input ─── */
+
 .chat-input-overlay {
   position: fixed;
   inset: 0;
