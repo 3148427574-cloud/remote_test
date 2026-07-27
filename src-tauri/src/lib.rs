@@ -49,6 +49,33 @@ fn set_always_on_top(app: tauri::AppHandle, on: bool) {
 }
 
 #[tauri::command]
+fn read_image_base64(path: String) -> Result<String, String> {
+    use std::io::Read;
+    let mut file = std::fs::File::open(&path).map_err(|e| format!("无法打开文件: {}", e))?;
+    let mut buf = Vec::new();
+    file.read_to_end(&mut buf)
+        .map_err(|e| format!("无法读取文件: {}", e))?;
+    let ext = std::path::Path::new(&path)
+        .extension()
+        .and_then(|e| e.to_str())
+        .unwrap_or("png")
+        .to_lowercase();
+    let mime = match ext.as_str() {
+        "jpg" | "jpeg" => "image/jpeg",
+        "gif" => "image/gif",
+        "webp" => "image/webp",
+        "bmp" => "image/bmp",
+        _ => "image/png",
+    };
+    Ok(format!("data:{};base64,{}", mime, base64_encode(&buf)))
+}
+
+fn base64_encode(data: &[u8]) -> String {
+    use base64::Engine;
+    base64::engine::general_purpose::STANDARD.encode(data)
+}
+
+#[tauri::command]
 fn set_window_scale(app: tauri::AppHandle, scale: f64) {
     if let Some(window) = app.get_webview_window("main") {
         let _ = window.set_size(tauri::LogicalSize::new(
@@ -90,6 +117,7 @@ pub fn run() {
             get_context,
             get_context_text,
             get_version,
+            read_image_base64,
             set_always_on_top,
             set_window_scale,
         ])

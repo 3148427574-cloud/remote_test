@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { ChatConfig } from "../systems/ai/chat";
 
-export type PetAvatar = { type: "puppy" } | { type: "cat" } | { type: "custom"; path: string };
+export type PetAvatar = { type: "puppy" } | { type: "cat" } | { type: "custom"; dataUrl: string };
 export type StartupBehavior = "show" | "tray";
 export type WindowScale = 0.8 | 1.0 | 1.2;
 export type InteractionFrequency = "active" | "normal" | "quiet";

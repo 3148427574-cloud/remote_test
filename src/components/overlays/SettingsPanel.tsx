@@ -1,5 +1,6 @@
 import { useSettingsStore } from "../../stores/useSettingsStore";
 import ApiSettings from "./settings/ApiSettings";
+import PetSettings from "./settings/PetSettings";
 
 export default function SettingsPanel() {
   const showSettings = useSettingsStore((s) => s.showSettings);
@@ -30,6 +31,7 @@ export default function SettingsPanel() {
       {showSettings && (
         <div className="settings-overlay" onClick={toggleSettings}>
           <div className="settings-panel" onClick={(e) => e.stopPropagation()}>
+            <PetSettings />
             <ApiSettings />
           </div>
         </div>

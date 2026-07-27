@@ -1,12 +1,20 @@
 import { usePetStore } from "../../stores/usePetStore";
-import aeriImg from "../../assets/images/puppy.png";
+import { useSettingsStore } from "../../stores/useSettingsStore";
+import puppyImg from "../../assets/images/puppy.png";
 
 export default function PetCanvas() {
   const currentTransform = usePetStore((s) => s.currentTransform);
   const currentAnimation = usePetStore((s) => s.currentAnimation);
   const currentSprite = usePetStore((s) => s.currentSprite);
+  const petAvatar = useSettingsStore((s) => s.petAvatar);
 
-  const displaySrc = currentSprite || aeriImg;
+  let avatarSrc = puppyImg;
+  if (petAvatar.type === "custom") {
+    avatarSrc = petAvatar.dataUrl;
+  }
+  // cat preset falls through to puppy until cat sprites are added
+
+  const displaySrc = currentSprite || avatarSrc;
 
   return (
     <div

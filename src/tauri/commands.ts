@@ -16,6 +16,12 @@ export function setWindowScale(scale: number): Promise<void> {
   return invoke("set_window_scale", { scale });
 }
 
+// ─── Image ──────────────────────────────────────────────
+
+export function readImageBase64(path: string): Promise<string> {
+  return invoke<string>("read_image_base64", { path });
+}
+
 // ─── Autostart ──────────────────────────────────────────
 
 export function isAutoLaunchEnabled(): Promise<boolean> {
