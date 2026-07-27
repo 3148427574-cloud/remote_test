@@ -95,10 +95,27 @@ body,
 
 .settings-panel {
   width: 280px;
+  max-height: 380px;
+  overflow-y: auto;
   background: rgba(255, 255, 255, 0.97);
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   padding: 12px;
+}
+
+.settings-section {
+  margin-bottom: 12px;
+}
+
+.settings-section-title {
+  font-size: 11px;
+  color: #aaa;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #eee;
 }
 
 .settings-field {

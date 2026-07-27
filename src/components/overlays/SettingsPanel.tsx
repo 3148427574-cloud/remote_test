@@ -1,12 +1,9 @@
-import { useChatStore } from "../../stores/useChatStore";
+import { useSettingsStore } from "../../stores/useSettingsStore";
+import ApiSettings from "./settings/ApiSettings";
 
 export default function SettingsPanel() {
-  const showSettings = useChatStore((s) => s.showSettings);
-  const toggleSettings = useChatStore((s) => s.toggleSettings);
-  const config = useChatStore((s) => s.config);
-  const setConfig = useChatStore((s) => s.setConfig);
-  const city = useChatStore((s) => s.city);
-  const setCity = useChatStore((s) => s.setCity);
+  const showSettings = useSettingsStore((s) => s.showSettings);
+  const toggleSettings = useSettingsStore((s) => s.toggleSettings);
 
   return (
     <>
@@ -33,42 +30,7 @@ export default function SettingsPanel() {
       {showSettings && (
         <div className="settings-overlay" onClick={toggleSettings}>
           <div className="settings-panel" onClick={(e) => e.stopPropagation()}>
-            <label className="settings-field">
-              <span>API URL</span>
-              <input
-                value={config.baseUrl}
-                onChange={(e) => setConfig({ baseUrl: e.target.value })}
-                placeholder="https://api.openai.com/v1"
-              />
-            </label>
-
-            <label className="settings-field">
-              <span>API Key</span>
-              <input
-                type="password"
-                value={config.apiKey}
-                onChange={(e) => setConfig({ apiKey: e.target.value })}
-                placeholder="sk-..."
-              />
-            </label>
-
-            <label className="settings-field">
-              <span>Model</span>
-              <input
-                value={config.model}
-                onChange={(e) => setConfig({ model: e.target.value })}
-                placeholder="gpt-4o-mini"
-              />
-            </label>
-
-            <label className="settings-field">
-              <span>City</span>
-              <input
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                placeholder="Beijing"
-              />
-            </label>
+            <ApiSettings />
           </div>
         </div>
       )}
