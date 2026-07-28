@@ -37,10 +37,17 @@ src/
 │   ├── pet/                   #   宠物渲染 + 拖动
 │   │   ├── PetCanvas.tsx      #     画布：渲染当前动画帧
 │   │   └── DragLayer.tsx      #     拖动 + 点击交互
-│   ├── overlays/              #   浮层 UI
-│   │   ├── SpeechBubble.tsx   #     对话气泡
-│   │   └── ChatInput.tsx      #     聊天输入框
-│   └── common/                #   通用组件
+│   └── overlays/              #   浮层 UI
+│       ├── SpeechBubble.tsx   #     对话气泡
+│       ├── ChatInput.tsx      #     聊天输入框
+│       ├── SettingsPanel.tsx  #     设置面板容器
+│       └── settings/          #     设置子面板
+│           ├── ApiSettings.tsx
+│           ├── PetSettings.tsx
+│           ├── LanguageSettings.tsx
+│           ├── BehaviorSettings.tsx
+│           ├── AppSettings.tsx
+│           └── AboutSection.tsx
 │
 ├── systems/                   # 引擎逻辑（纯 TS，不依赖 React）
 │   ├── animation/             #   动画系统
@@ -49,22 +56,18 @@ src/
 │   │   └── controller.ts      #     帧推进控制器
 │   ├── behavior/              #   自主行为
 │   │   └── idle.ts            #     空闲时随机动作
-│   ├── emotion/               #   情绪系统（待实现）
-│   │   ├── types.ts
-│   │   └── engine.ts
-│   └── ai/                    #   AI 对话
-│       └── chat.ts            #     LLM 流式 API 调用
+│   ├── ai/                    #   AI 对话
+│   │   └── chat.ts            #     LLM 流式 API 调用
+│   └── i18n/                  #   国际化
+│       └── locale.ts          #     中/英/日三语
 │
-├── stores/                    # Zustand 状态桥接
+├── stores/                    # Zustand 状态
 │   ├── usePetStore.ts         #   宠物状态（位置/动画/情绪）
 │   ├── useChatStore.ts        #   对话状态（消息/流式）
-│   └── useSettingsStore.ts    #   设置（待实现）
+│   └── useSettingsStore.ts    #   设置（12 项配置，含持久化）
 │
 ├── tauri/                     # Rust ↔ 前端桥接
-│   ├── commands.ts            #   类型化的 Tauri 命令
-│   ├── storage.ts             #   本地持久化
-│   ├── window.ts              #   窗口操作
-│   └── system.ts              #   系统托盘 / 开机启动
+│   └── commands.ts            #   类型化的 Tauri 命令
 │
 └── assets/
     ├── images/                # 静态图片
@@ -74,9 +77,8 @@ src/
 src-tauri/                     # Rust 后端
 └── src/
     ├── main.rs                # 入口
-    ├── lib.rs                 # 插件注册
-    ├── commands/              # Tauri 命令
-    └── models/                # 数据模型
+    ├── lib.rs                 # 命令注册 + 插件
+    └── context/               # 环境上下文（时间/天气/系统）
 ```
 
 ## 模块职责速查
