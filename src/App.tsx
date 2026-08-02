@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { usePetStore } from "./stores/usePetStore";
 import { useChatStore } from "./stores/useChatStore";
+import { useSettingsStore } from "./stores/useSettingsStore";
 import { tickBehavior } from "./systems/behavior/idle";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { PhysicalPosition } from "@tauri-apps/api/dpi";
@@ -21,6 +22,8 @@ export default function App() {
   const prevAnimationRef = useRef("idle");
 
   useEffect(() => {
+    useSettingsStore.getState().hydrate();
+
     const loop = (now: number) => {
       const dt = now - lastTimeRef.current;
       lastTimeRef.current = now;
@@ -78,7 +81,7 @@ export default function App() {
 
         // 2. 自主动作（非对话中）
         if (!chat.isStreaming) {
-          const action = tickBehavior(pet.idleTimer, { joy: pet.joy });
+          const action = tickBehavior(pet.idleTimer, pet.getEmotion());
           if (action) {
             pet.playAnimation(action);
             pet.setIdleTimer(0);

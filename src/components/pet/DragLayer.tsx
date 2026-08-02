@@ -1,5 +1,6 @@
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { useChatStore } from "../../stores/useChatStore";
+import { usePetStore } from "../../stores/usePetStore";
 
 export default function DragLayer() {
   const toggleInput = useChatStore((s) => s.toggleInput);
@@ -14,6 +15,7 @@ export default function DragLayer() {
         getCurrentWindow().startDragging();
       }}
       onClick={() => {
+        usePetStore.getState().emitEmotionEvent({ type: "pet_clicked" });
         if (!isStreaming) toggleInput();
       }}
       style={{

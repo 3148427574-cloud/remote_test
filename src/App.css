@@ -332,3 +332,59 @@ body,
 .chat-input-send:hover {
   background: #e8892e;
 }
+
+/* ─── emotion meters ─── */
+
+.emotion-meter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.emotion-meter-label {
+  font-size: 11px;
+  color: #888;
+  width: 32px;
+  flex-shrink: 0;
+}
+
+.emotion-meter-bar {
+  flex: 1;
+  height: 6px;
+  background: #eee;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.emotion-meter-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.emotion-meter-value {
+  font-size: 10px;
+  color: #bbb;
+  width: 22px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.emotion-reset-btn {
+  width: 100%;
+  margin-top: 4px;
+  padding: 3px 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.6);
+  font-size: 11px;
+  color: #999;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.emotion-reset-btn:hover {
+  border-color: #e91e63;
+  color: #e91e63;
+}

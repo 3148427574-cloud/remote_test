@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { ChatConfig } from "../systems/ai/chat";
+import { getVersion } from "../tauri/commands";
 
 export type PetAvatar = { type: "puppy" } | { type: "cat" } | { type: "custom"; dataUrl: string };
 export type StartupBehavior = "show" | "tray";
@@ -8,6 +9,7 @@ export type WindowScale = 0.8 | 1.0 | 1.2;
 export type InteractionFrequency = "active" | "normal" | "quiet";
 export type ReplyStyle = "cute" | "concise" | "formal";
 export type Language = "zh" | "en" | "ja";
+export type EmotionSensitivity = "sensitive" | "normal" | "stoic";
 
 interface SettingsState {
   config: ChatConfig;
@@ -27,6 +29,8 @@ interface SettingsState {
   interactionFrequency: InteractionFrequency;
   replyStyle: ReplyStyle;
   chatMemory: boolean;
+
+  emotionSensitivity: EmotionSensitivity;
 
   appVersion: string;
 }
@@ -49,6 +53,8 @@ interface SettingsActions {
   setInteractionFrequency: (f: InteractionFrequency) => void;
   setReplyStyle: (s: ReplyStyle) => void;
   setChatMemory: (on: boolean) => void;
+
+  setEmotionSensitivity: (s: EmotionSensitivity) => void;
 
   hydrate: () => Promise<void>;
 }
@@ -78,6 +84,8 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()(
       replyStyle: "cute",
       chatMemory: true,
 
+      emotionSensitivity: "normal",
+
       appVersion: "0.1.0",
 
       setConfig: (partial) =>
@@ -101,8 +109,15 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()(
       setReplyStyle: (replyStyle) => set({ replyStyle }),
       setChatMemory: (chatMemory) => set({ chatMemory }),
 
+      setEmotionSensitivity: (emotionSensitivity) => set({ emotionSensitivity }),
+
       hydrate: async () => {
-        // Part 2 实现：从 Rust 后端获取版本号等系统信息
+        try {
+          const version = await getVersion();
+          set({ appVersion: version });
+        } catch {
+          // 获取失败时保留默认版本号
+        }
       },
     }),
     {

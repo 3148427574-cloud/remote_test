@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { streamChat, type ChatMessage } from "../systems/ai/chat";
 import { useSettingsStore } from "./useSettingsStore";
+import { usePetStore } from "./usePetStore";
 
 interface ChatState {
   messages: ChatMessage[];
@@ -26,6 +27,8 @@ export const useChatStore = create<ChatState & ChatActions>((set, get) => ({
     const { messages } = get();
     const history = chatMemory ? messages : [];
     set({ isStreaming: true, currentReply: "", showInput: false });
+
+    usePetStore.getState().emitEmotionEvent({ type: "user_message" });
 
     const userMsg: ChatMessage = { role: "user", content: text };
     const newMessages = [...history, userMsg];

@@ -33,7 +33,16 @@ type LocaleKey =
   | "chat_hotkey"
   | "about"
   | "about_desc"
-  | "language";
+  | "language"
+  | "emotion"
+  | "emotion_sensitivity"
+  | "joy"
+  | "energy"
+  | "affection"
+  | "sensitive"
+  | "stoic"
+  | "reset_emotion"
+  | "reset";
 
 const LOCALE: Record<Language, Record<LocaleKey, string>> = {
   zh: {
@@ -69,6 +78,15 @@ const LOCALE: Record<Language, Record<LocaleKey, string>> = {
     about: "关于",
     about_desc: "桌面 AI 伴侣宠物",
     language: "语言",
+    emotion: "情感",
+    emotion_sensitivity: "情感敏感度",
+    joy: "快乐",
+    energy: "精力",
+    affection: "好感",
+    sensitive: "敏感",
+    stoic: "淡定",
+    reset_emotion: "重置情感",
+    reset: "重置",
   },
   en: {
     pet: "Pet",
@@ -103,6 +121,15 @@ const LOCALE: Record<Language, Record<LocaleKey, string>> = {
     about: "About",
     about_desc: "Desktop AI Companion Pet",
     language: "Language",
+    emotion: "Emotion",
+    emotion_sensitivity: "Sensitivity",
+    joy: "Joy",
+    energy: "Energy",
+    affection: "Affection",
+    sensitive: "Sensitive",
+    stoic: "Stoic",
+    reset_emotion: "Reset Emotions",
+    reset: "Reset",
   },
   ja: {
     pet: "ペット",
@@ -137,6 +164,15 @@ const LOCALE: Record<Language, Record<LocaleKey, string>> = {
     about: "について",
     about_desc: "デスクトップ AI ペット",
     language: "言語",
+    emotion: "感情",
+    emotion_sensitivity: "感度",
+    joy: "喜び",
+    energy: "元気",
+    affection: "好感度",
+    sensitive: "敏感",
+    stoic: "冷静",
+    reset_emotion: "感情リセット",
+    reset: "リセット",
   },
 };
 

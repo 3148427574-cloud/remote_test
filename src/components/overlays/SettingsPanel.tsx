@@ -3,6 +3,7 @@ import ApiSettings from "./settings/ApiSettings";
 import PetSettings from "./settings/PetSettings";
 import LanguageSettings from "./settings/LanguageSettings";
 import BehaviorSettings from "./settings/BehaviorSettings";
+import EmotionSettings from "./settings/EmotionSettings";
 import AppSettings from "./settings/AppSettings";
 import AboutSection from "./settings/AboutSection";
 
@@ -38,6 +39,7 @@ export default function SettingsPanel() {
             <PetSettings />
             <LanguageSettings />
             <BehaviorSettings />
+            <EmotionSettings />
             <ApiSettings />
             <AppSettings />
             <AboutSection />
