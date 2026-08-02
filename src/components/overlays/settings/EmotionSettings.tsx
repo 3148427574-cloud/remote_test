@@ -29,23 +29,25 @@ export default function EmotionSettings() {
     <div className="settings-section">
       <div className="settings-section-title">{t("emotion")}</div>
 
-      {METERS.map((m) => (
-        <div key={m.key} className="emotion-meter">
-          <span className="emotion-meter-label">{t(m.key)}</span>
-          <div className="emotion-meter-bar">
-            <div
-              className="emotion-meter-fill"
-              style={{
-                width: `${Math.round((emotion[m.key] as number) * 100)}%`,
-                background: m.color,
-              }}
-            />
+      <div style={{ padding: "4px 20px" }}>
+        {METERS.map((m) => (
+          <div key={m.key} className="emotion-meter">
+            <span className="emotion-meter-label">{t(m.key)}</span>
+            <div className="emotion-meter-bar">
+              <div
+                className="emotion-meter-fill"
+                style={{
+                  width: `${Math.round((emotion[m.key] as number) * 100)}%`,
+                  background: m.color,
+                }}
+              />
+            </div>
+            <span className="emotion-meter-value">
+              {Math.round((emotion[m.key] as number) * 100)}
+            </span>
           </div>
-          <span className="emotion-meter-value">
-            {Math.round((emotion[m.key] as number) * 100)}
-          </span>
-        </div>
-      ))}
+        ))}
+      </div>
 
       <div className="settings-field">
         <span>{t("emotion_sensitivity")}</span>
@@ -62,9 +64,11 @@ export default function EmotionSettings() {
         </div>
       </div>
 
-      <button className="emotion-reset-btn" onClick={handleReset}>
-        {t("reset_emotion")}
-      </button>
+      <div style={{ display: "flex", justifyContent: "center", padding: "6px 20px" }}>
+        <button className="emotion-reset-btn" onClick={handleReset}>
+          {t("reset_emotion")}
+        </button>
+      </div>
     </div>
   );
 }

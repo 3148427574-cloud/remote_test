@@ -4,12 +4,14 @@ import PetSettings from "./settings/PetSettings";
 import LanguageSettings from "./settings/LanguageSettings";
 import BehaviorSettings from "./settings/BehaviorSettings";
 import EmotionSettings from "./settings/EmotionSettings";
+import ThemeSettings from "./settings/ThemeSettings";
 import AppSettings from "./settings/AppSettings";
 import AboutSection from "./settings/AboutSection";
 
 export default function SettingsPanel() {
   const showSettings = useSettingsStore((s) => s.showSettings);
   const toggleSettings = useSettingsStore((s) => s.toggleSettings);
+  const theme = useSettingsStore((s) => s.theme);
 
   return (
     <>
@@ -35,13 +37,20 @@ export default function SettingsPanel() {
 
       {showSettings && (
         <div className="settings-overlay" onClick={toggleSettings}>
-          <div className="settings-panel" onClick={(e) => e.stopPropagation()}>
+          <div className="settings-panel" data-theme={theme} onClick={(e) => e.stopPropagation()}>
+            <button className="settings-close-btn" onClick={toggleSettings} aria-label="关闭">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
             <PetSettings />
             <LanguageSettings />
             <BehaviorSettings />
             <EmotionSettings />
             <ApiSettings />
             <AppSettings />
+            <ThemeSettings />
             <AboutSection />
           </div>
         </div>

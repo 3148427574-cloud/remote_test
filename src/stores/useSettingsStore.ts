@@ -10,6 +10,7 @@ export type InteractionFrequency = "active" | "normal" | "quiet";
 export type ReplyStyle = "cute" | "concise" | "formal";
 export type Language = "zh" | "en" | "ja";
 export type EmotionSensitivity = "sensitive" | "normal" | "stoic";
+export type Theme = "frosted" | "dark" | "kawaii" | "wabisabi" | "neon";
 
 interface SettingsState {
   config: ChatConfig;
@@ -31,6 +32,7 @@ interface SettingsState {
   chatMemory: boolean;
 
   emotionSensitivity: EmotionSensitivity;
+  theme: Theme;
 
   appVersion: string;
 }
@@ -55,6 +57,7 @@ interface SettingsActions {
   setChatMemory: (on: boolean) => void;
 
   setEmotionSensitivity: (s: EmotionSensitivity) => void;
+  setTheme: (t: Theme) => void;
 
   hydrate: () => Promise<void>;
 }
@@ -85,6 +88,7 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()(
       chatMemory: true,
 
       emotionSensitivity: "normal",
+      theme: "frosted",
 
       appVersion: "0.1.0",
 
@@ -110,6 +114,7 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()(
       setChatMemory: (chatMemory) => set({ chatMemory }),
 
       setEmotionSensitivity: (emotionSensitivity) => set({ emotionSensitivity }),
+      setTheme: (theme) => set({ theme }),
 
       hydrate: async () => {
         try {

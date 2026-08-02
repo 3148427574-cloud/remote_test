@@ -82,145 +82,374 @@ body,
   cursor: not-allowed;
 }
 
+/* ═══════════════════════════════════════════
+   SETTINGS OVERLAY & PANEL
+   ═══════════════════════════════════════════ */
+
 .settings-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.25);
   display: flex;
-  align-items: flex-end;
+  align-items: safe center;
   justify-content: center;
-  padding-bottom: 50px;
+  padding: 16px;
   z-index: 100;
 }
 
+/* frosted (default) */
 .settings-panel {
-  width: 280px;
-  max-height: 380px;
+  --panel-bg: rgba(255, 255, 255, 0.72);
+  --panel-blur: blur(24px) saturate(180%);
+  --panel-border: 0.5px solid rgba(255, 255, 255, 0.5);
+  --panel-shadow: 0 4px 24px rgba(0, 0, 0, 0.08),
+    0 1px 4px rgba(0, 0, 0, 0.04),
+    inset 0 0.5px 0 rgba(255, 255, 255, 0.6);
+  --text-primary: #2d2420;
+  --text-secondary: #8b7355;
+  --text-muted: #c4b8a8;
+  --divider: 0.5px solid rgba(0, 0, 0, 0.05);
+  --seg-track: rgba(0, 0, 0, 0.05);
+  --seg-btn-text: #8b7355;
+  --seg-active-bg: #ffffff;
+  --seg-active-text: #2d2420;
+  --seg-active-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --tgl-off: rgba(0, 0, 0, 0.13);
+  --tgl-on: #34c759;
+  --tgl-glow: 0 0 12px rgba(52, 199, 89, 0.25);
+  --emo-bar-bg: rgba(0, 0, 0, 0.06);
+  --scrollbar-thumb: rgba(0, 0, 0, 0.12);
+  --input-bg: transparent;
+  --input-border: none;
+  --font-family: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+
+  font-family: var(--font-family);
+  position: relative;
+  width: 300px;
+  max-height: calc(100vh - 32px);
   overflow-y: auto;
-  background: rgba(255, 255, 255, 0.97);
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  padding: 12px;
+  background: var(--panel-bg);
+  backdrop-filter: var(--panel-blur);
+  -webkit-backdrop-filter: var(--panel-blur);
+  border-radius: 16px;
+  border: var(--panel-border);
+  box-shadow: var(--panel-shadow);
+  padding: 20px 0 12px 0;
 }
 
+/* dark */
+.settings-panel[data-theme="dark"] {
+  --font-family: "Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif;
+  --panel-bg: rgba(20, 20, 22, 0.78);
+  --panel-blur: blur(24px) saturate(100%);
+  --panel-border: 0.5px solid rgba(255, 255, 255, 0.08);
+  --panel-shadow: 0 4px 24px rgba(0, 0, 0, 0.25),
+    inset 0 0.5px 0 rgba(255, 255, 255, 0.06);
+  --text-primary: #ffffff;
+  --text-secondary: #8e8e93;
+  --text-muted: #636366;
+  --divider: 0.5px solid rgba(255, 255, 255, 0.06);
+  --seg-track: rgba(255, 255, 255, 0.08);
+  --seg-btn-text: #8e8e93;
+  --seg-active-bg: rgba(255, 255, 255, 0.15);
+  --seg-active-text: #ffffff;
+  --seg-active-shadow: none;
+  --tgl-off: rgba(255, 255, 255, 0.15);
+  --emo-bar-bg: rgba(255, 255, 255, 0.08);
+  --scrollbar-thumb: rgba(255, 255, 255, 0.15);
+}
+
+/* kawaii */
+.settings-panel[data-theme="kawaii"] {
+  --font-family: ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont, sans-serif;
+  --panel-bg: rgba(255, 248, 245, 0.92);
+  --panel-blur: blur(12px);
+  --panel-border: 1px solid rgba(255, 180, 150, 0.25);
+  --panel-shadow: 0 4px 20px rgba(255, 150, 100, 0.08);
+  --text-primary: #5c4033;
+  --text-secondary: #b89580;
+  --text-muted: #d4b8a8;
+  --divider: 0.5px solid rgba(255, 180, 160, 0.15);
+  --seg-track: rgba(255, 200, 170, 0.2);
+  --seg-btn-text: #b89580;
+  --seg-active-bg: #ffffff;
+  --seg-active-text: #e88060;
+  --seg-active-shadow: 0 1px 4px rgba(255, 150, 120, 0.15);
+  --tgl-off: rgba(255, 180, 160, 0.3);
+  --tgl-on: #ffb099;
+  --tgl-glow: 0 0 12px rgba(255, 176, 153, 0.3);
+  --emo-bar-bg: rgba(255, 180, 160, 0.15);
+  --scrollbar-thumb: rgba(255, 180, 160, 0.25);
+}
+
+/* wabisabi */
+.settings-panel[data-theme="wabisabi"] {
+  --font-family: "New York", Georgia, "Times New Roman", serif;
+  --panel-bg: rgba(250, 247, 242, 0.94);
+  --panel-blur: blur(8px);
+  --panel-border: 0.5px solid rgba(0, 0, 0, 0.06);
+  --panel-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  --text-primary: #333333;
+  --text-secondary: #999999;
+  --text-muted: #cccccc;
+  --divider: 0.5px solid rgba(0, 0, 0, 0.04);
+  --seg-track: transparent;
+  --seg-btn-text: #999999;
+  --seg-active-bg: transparent;
+  --seg-active-text: #333333;
+  --seg-active-shadow: none;
+  --tgl-off: #dddddd;
+  --emo-bar-bg: #eeeeee;
+  --scrollbar-thumb: rgba(0, 0, 0, 0.08);
+}
+
+/* neon */
+.settings-panel[data-theme="neon"] {
+  --font-family: "SF Mono", "JetBrains Mono", "Fira Code", monospace;
+  --panel-bg: rgba(15, 12, 24, 0.88);
+  --panel-blur: blur(20px);
+  --panel-border: 0.5px solid rgba(180, 130, 255, 0.15);
+  --panel-shadow: 0 0 40px rgba(140, 80, 255, 0.08),
+    0 4px 20px rgba(0, 0, 0, 0.3);
+  --text-primary: #e8e0ff;
+  --text-secondary: #8a75c8;
+  --text-muted: #5c4d8a;
+  --divider: 0.5px solid rgba(180, 130, 255, 0.08);
+  --seg-track: rgba(180, 130, 255, 0.1);
+  --seg-btn-text: #8a75c8;
+  --seg-active-bg: rgba(180, 130, 255, 0.25);
+  --seg-active-text: #e8e0ff;
+  --seg-active-shadow: none;
+  --tgl-off: rgba(180, 130, 255, 0.2);
+  --tgl-on: #b084ff;
+  --tgl-glow: 0 0 16px rgba(176, 132, 255, 0.35);
+  --emo-bar-bg: rgba(180, 130, 255, 0.1);
+  --scrollbar-thumb: rgba(180, 130, 255, 0.2);
+}
+
+.settings-panel::-webkit-scrollbar {
+  width: 3px;
+}
+.settings-panel::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 2px;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION & TITLE
+   ═══════════════════════════════════════════ */
+
 .settings-section {
-  margin-bottom: 12px;
+  margin-bottom: 0;
 }
 
 .settings-section-title {
-  font-size: 11px;
-  color: #aaa;
+  font-size: 12px;
   font-weight: 600;
+  color: var(--text-secondary);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 6px;
-  padding-bottom: 4px;
-  border-bottom: 1px solid #eee;
+  letter-spacing: 0.06em;
+  padding: 14px 20px 6px 20px;
+  margin-bottom: 0;
+  border-bottom: none;
 }
+.settings-section:first-child .settings-section-title {
+  padding-top: 4px;
+}
+
+/* close button */
+.settings-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: none;
+  background: var(--seg-track);
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+  z-index: 1;
+}
+.settings-close-btn:hover {
+  background: var(--text-muted);
+  color: var(--text-primary);
+}
+
+/* ═══════════════════════════════════════════
+   FIELD ROWS
+   ═══════════════════════════════════════════ */
 
 .settings-field {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  margin-bottom: 8px;
+  padding: 8px 20px;
+  gap: 4px;
+  margin-bottom: 0;
 }
 
-.pet-avatar-selector {
-  display: flex;
-  gap: 6px;
-  margin-top: 2px;
-}
-
-.pet-avatar-btn {
-  flex: 1;
-  padding: 4px 0;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.6);
-  font-size: 11px;
-  color: #666;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-
-.pet-avatar-btn:hover {
-  border-color: #ff9f43;
-  color: #ff9f43;
-}
-
-.pet-avatar-btn.active {
-  background: #ff9f43;
-  border-color: #ff9f43;
-  color: #fff;
+.settings-field + .settings-field {
+  border-top: var(--divider);
 }
 
 .settings-field span {
-  font-size: 11px;
-  color: #888;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 450;
+  color: var(--text-primary);
 }
 
 .settings-field input {
   width: 100%;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  padding: 5px 8px;
-  font-size: 12px;
-  color: #333;
-  background: rgba(255, 255, 255, 0.8);
+  border: var(--input-border);
+  border-radius: 0;
+  padding: 0;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--text-primary);
+  background: var(--input-bg);
   outline: none;
   box-sizing: border-box;
 }
 
-.settings-field input:focus {
-  border-color: #ff9f43;
+.settings-field input::placeholder {
+  color: var(--text-muted);
 }
 
-/* ─── settings row (label + toggle) ─── */
+.settings-field input:focus {
+  border: var(--input-border);
+}
 
+/* row variant for label + toggle side-by-side */
 .settings-field-row {
   flex-direction: row !important;
   align-items: center;
   justify-content: space-between;
 }
 
-/* ─── segmented button group ─── */
+/* ═══════════════════════════════════════════
+   PET AVATAR SELECTOR
+   ═══════════════════════════════════════════ */
+
+.pet-avatar-selector {
+  display: flex;
+  gap: 0;
+  background: var(--seg-track);
+  border-radius: 7px;
+  padding: 2px;
+  margin-top: 0;
+}
+
+.pet-avatar-btn {
+  flex: 1;
+  padding: 5px 0;
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--seg-btn-text);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pet-avatar-btn:hover {
+  color: var(--text-primary);
+}
+
+.pet-avatar-btn.active {
+  background: var(--seg-active-bg);
+  color: var(--seg-active-text);
+  box-shadow: var(--seg-active-shadow);
+}
+
+/* ═══════════════════════════════════════════
+   SEGMENTED CONTROLS
+   ═══════════════════════════════════════════ */
 
 .segmented-row {
   display: flex;
-  gap: 4px;
-  margin-top: 2px;
+  gap: 0;
+  background: var(--seg-track);
+  border-radius: 7px;
+  padding: 2px;
+  margin-top: 0;
 }
 
 .segmented-btn {
   flex: 1;
-  padding: 4px 0;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.6);
-  font-size: 11px;
-  color: #666;
+  padding: 5px 0;
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--seg-btn-text);
+  background: transparent;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: all 0.2s;
 }
 
 .segmented-btn:hover {
-  border-color: #ff9f43;
-  color: #ff9f43;
+  color: var(--text-primary);
 }
 
 .segmented-btn.active {
-  background: #ff9f43;
-  border-color: #ff9f43;
-  color: #fff;
+  background: var(--seg-active-bg);
+  color: var(--seg-active-text);
+  box-shadow: var(--seg-active-shadow);
 }
 
-/* ─── toggle switch ─── */
+/* Wabi-sabi: underline active instead of pill */
+.settings-panel[data-theme="wabisabi"] .segmented-row {
+  background: transparent;
+  gap: 2px;
+}
+.settings-panel[data-theme="wabisabi"] .segmented-btn {
+  font-size: 11px;
+  border-radius: 0;
+  border-bottom: 2px solid transparent;
+  padding: 4px 0 6px;
+}
+.settings-panel[data-theme="wabisabi"] .segmented-btn.active {
+  background: none;
+  box-shadow: none;
+  border-bottom-color: #333;
+}
+.settings-panel[data-theme="wabisabi"] .pet-avatar-selector {
+  background: transparent;
+  gap: 2px;
+}
+.settings-panel[data-theme="wabisabi"] .pet-avatar-btn {
+  font-size: 11px;
+  border-radius: 0;
+  border-bottom: 2px solid transparent;
+  padding: 4px 0 6px;
+}
+.settings-panel[data-theme="wabisabi"] .pet-avatar-btn.active {
+  background: none;
+  box-shadow: none;
+  border-bottom-color: #333;
+}
+
+/* 5-option theme selector */
+.theme-segmented .segmented-btn {
+  font-size: 10px;
+  padding: 4px 0;
+}
+
+/* ═══════════════════════════════════════════
+   LIQUID GLASS TOGGLE SWITCH
+   ═══════════════════════════════════════════ */
 
 .toggle-switch {
   position: relative;
-  width: 36px;
-  height: 20px;
+  width: 47px;
+  height: 28px;
   flex-shrink: 0;
 }
 
@@ -233,10 +462,11 @@ body,
 .toggle-slider {
   position: absolute;
   inset: 0;
-  background: #ddd;
-  border-radius: 10px;
+  border-radius: 14px;
   cursor: pointer;
-  transition: background 0.2s;
+  background: var(--tgl-off);
+  box-shadow: inset 0 0.5px 2px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 .toggle-slider::before {
@@ -244,67 +474,141 @@ body,
   position: absolute;
   top: 2px;
   left: 2px;
-  width: 16px;
-  height: 16px;
-  background: #fff;
+  width: 24px;
+  height: 24px;
+  background: radial-gradient(circle at 50% 35%, #fff 0%, #f5f5f5 100%);
   border-radius: 50%;
-  transition: transform 0.2s;
+  box-shadow:
+    0 1px 4px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transition: transform 0.3s ease;
 }
 
 .toggle-switch input:checked + .toggle-slider {
-  background: #ff9f43;
+  background: var(--tgl-on);
+  box-shadow: inset 0 0.5px 2px rgba(0, 0, 0, 0.08), var(--tgl-glow);
 }
 
 .toggle-switch input:checked + .toggle-slider::before {
-  transform: translateX(16px);
+  transform: translateX(19px);
 }
 
-/* ─── about section ─── */
+/* ═══════════════════════════════════════════
+   EMOTION METERS
+   ═══════════════════════════════════════════ */
+
+.emotion-meter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+
+.emotion-meter:last-child {
+  margin-bottom: 0;
+}
+
+.emotion-meter-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  width: 28px;
+  flex-shrink: 0;
+}
+
+.emotion-meter-bar {
+  flex: 1;
+  height: 3px;
+  background: var(--emo-bar-bg);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.emotion-meter-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.emotion-meter-value {
+  font-size: 11px;
+  color: var(--text-muted);
+  width: 22px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.emotion-reset-btn {
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  font-family: inherit;
+  color: #e07050;
+  cursor: pointer;
+  padding: 2px 0;
+}
+
+.emotion-reset-btn:hover {
+  opacity: 0.7;
+}
+
+/* ═══════════════════════════════════════════
+   ABOUT SECTION
+   ═══════════════════════════════════════════ */
 
 .about-info {
   text-align: center;
   padding: 4px 0;
+  width: 100%;
 }
 
 .about-name {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
 }
 
 .about-version {
-  font-size: 11px;
-  color: #999;
+  font-size: 12px;
+  color: var(--text-secondary);
   margin-top: 2px;
 }
 
 .about-desc {
-  font-size: 10px;
-  color: #bbb;
-  margin-top: 2px;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 6px;
 }
 
-/* ─── chat input ─── */
+/* ═══════════════════════════════════════════
+   CHAT INPUT (unchanged structure, minor polish)
+   ═══════════════════════════════════════════ */
 
 .chat-input-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.2);
+  top: auto;
+  bottom: 0;
+  height: auto;
+  background: transparent;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding-bottom: 50px;
+  padding-bottom: 2px;
   z-index: 100;
+  pointer-events: none;
+}
+.chat-input-overlay > * {
+  pointer-events: auto;
 }
 
 .chat-input-bar {
   display: flex;
   gap: 4px;
-  padding: 6px;
+  padding: 4px 6px;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.97);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  width: 280px;
+  width: 260px;
 }
 
 .chat-input-field {
@@ -322,7 +626,6 @@ body,
   background: #ff9f43;
   color: #fff;
   border-radius: 6px;
-  padding: "2px 10px";
   cursor: pointer;
   font-size: 13px;
   flex-shrink: 0;
@@ -331,60 +634,4 @@ body,
 
 .chat-input-send:hover {
   background: #e8892e;
-}
-
-/* ─── emotion meters ─── */
-
-.emotion-meter {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 4px;
-}
-
-.emotion-meter-label {
-  font-size: 11px;
-  color: #888;
-  width: 32px;
-  flex-shrink: 0;
-}
-
-.emotion-meter-bar {
-  flex: 1;
-  height: 6px;
-  background: #eee;
-  border-radius: 3px;
-  overflow: hidden;
-}
-
-.emotion-meter-fill {
-  height: 100%;
-  border-radius: 3px;
-  transition: width 0.3s ease;
-}
-
-.emotion-meter-value {
-  font-size: 10px;
-  color: #bbb;
-  width: 22px;
-  text-align: right;
-  flex-shrink: 0;
-}
-
-.emotion-reset-btn {
-  width: 100%;
-  margin-top: 4px;
-  padding: 3px 0;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.6);
-  font-size: 11px;
-  color: #999;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-
-.emotion-reset-btn:hover {
-  border-color: #e91e63;
-  color: #e91e63;
 }

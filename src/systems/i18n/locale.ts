@@ -42,7 +42,13 @@ type LocaleKey =
   | "sensitive"
   | "stoic"
   | "reset_emotion"
-  | "reset";
+  | "reset"
+  | "theme"
+  | "theme_frosted"
+  | "theme_dark"
+  | "theme_kawaii"
+  | "theme_wabisabi"
+  | "theme_neon";
 
 const LOCALE: Record<Language, Record<LocaleKey, string>> = {
   zh: {
@@ -87,6 +93,12 @@ const LOCALE: Record<Language, Record<LocaleKey, string>> = {
     stoic: "淡定",
     reset_emotion: "重置情感",
     reset: "重置",
+    theme: "风格",
+    theme_frosted: "磨砂玻璃",
+    theme_dark: "深色玻璃",
+    theme_kawaii: "软萌粉彩",
+    theme_wabisabi: "侘寂极简",
+    theme_neon: "霓虹紫夜",
   },
   en: {
     pet: "Pet",
@@ -130,6 +142,12 @@ const LOCALE: Record<Language, Record<LocaleKey, string>> = {
     stoic: "Stoic",
     reset_emotion: "Reset Emotions",
     reset: "Reset",
+    theme: "Theme",
+    theme_frosted: "Frosted Glass",
+    theme_dark: "Dark Glass",
+    theme_kawaii: "Kawaii",
+    theme_wabisabi: "Wabi-Sabi",
+    theme_neon: "Neon Play",
   },
   ja: {
     pet: "ペット",
@@ -173,6 +191,12 @@ const LOCALE: Record<Language, Record<LocaleKey, string>> = {
     stoic: "冷静",
     reset_emotion: "感情リセット",
     reset: "リセット",
+    theme: "テーマ",
+    theme_frosted: "フロストガラス",
+    theme_dark: "ダークガラス",
+    theme_kawaii: "カワイイ",
+    theme_wabisabi: "侘び寂び",
+    theme_neon: "ネオン",
   },
 };
 
